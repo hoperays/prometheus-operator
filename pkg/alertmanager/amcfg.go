@@ -141,10 +141,11 @@ func convertRoute(in *monitoringv1alpha1.Route, crKey types.NamespacedName, firs
 			match[matcher.Name] = matcher.Value
 		}
 	}
-	if firstLevelRoute {
-		match["namespace"] = crKey.Namespace
-		delete(matchRE, "namespace")
-	}
+	// Workaround: https://github.com/prometheus-operator/prometheus-operator/issues/3737
+	// if firstLevelRoute {
+	// 	match["namespace"] = crKey.Namespace
+	// 	delete(matchRE, "namespace")
+	// }
 
 	// Set to nil if empty so that it doesn't show up in the resulting yaml.
 	if len(match) == 0 {
