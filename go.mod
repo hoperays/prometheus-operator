@@ -24,8 +24,8 @@ require (
 	github.com/prometheus-operator/prometheus-operator/pkg/client v0.61.0
 	github.com/prometheus/alertmanager v0.24.0
 	github.com/prometheus/client_golang v1.14.0
-	github.com/prometheus/common v0.37.0
-	github.com/prometheus/prometheus v0.40.3
+	github.com/prometheus/common v0.37.1
+	github.com/prometheus/prometheus v0.40.7
 	github.com/stretchr/testify v1.8.1
 	github.com/thanos-io/thanos v0.29.0
 	golang.org/x/sync v0.1.0
@@ -44,7 +44,7 @@ require (
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2
-	golang.org/x/net v0.2.0
+	golang.org/x/net v0.4.0
 )
 
 require (
@@ -108,9 +108,9 @@ require (
 	go.uber.org/goleak v1.2.0 // indirect
 	golang.org/x/exp v0.0.0-20221031165847-c99f073a8326 // indirect
 	golang.org/x/oauth2 v0.2.0 // indirect
-	golang.org/x/sys v0.2.0 // indirect
-	golang.org/x/term v0.2.0 // indirect
-	golang.org/x/text v0.4.0 // indirect
+	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/term v0.3.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
 	golang.org/x/time v0.2.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c // indirect
