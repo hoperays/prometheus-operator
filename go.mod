@@ -32,10 +32,10 @@ require (
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/yaml.v2 v2.4.0
-	k8s.io/api v0.25.4
+	k8s.io/api v0.26.2
 	k8s.io/apiextensions-apiserver v0.25.4
-	k8s.io/apimachinery v0.25.4
-	k8s.io/client-go v0.25.4
+	k8s.io/apimachinery v0.26.2
+	k8s.io/client-go v0.26.2
 	k8s.io/component-base v0.25.4
 	k8s.io/klog/v2 v2.80.1
 	k8s.io/utils v0.0.0-20221108210102-8e77b1f39fe2
@@ -44,7 +44,7 @@ require (
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2
-	golang.org/x/net v0.2.0
+	golang.org/x/net v0.7.0
 )
 
 require (
@@ -108,9 +108,9 @@ require (
 	go.uber.org/goleak v1.2.0 // indirect
 	golang.org/x/exp v0.0.0-20221031165847-c99f073a8326 // indirect
 	golang.org/x/oauth2 v0.2.0 // indirect
-	golang.org/x/sys v0.2.0 // indirect
-	golang.org/x/term v0.2.0 // indirect
-	golang.org/x/text v0.4.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/term v0.5.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	golang.org/x/time v0.2.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c // indirect
