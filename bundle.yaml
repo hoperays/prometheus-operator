@@ -16,6 +16,7 @@ spec:
     plural: alertmanagerconfigs
     shortNames:
     - amcfg
+    - subs
     singular: alertmanagerconfig
   scope: Namespaced
   versions:
@@ -31608,6 +31609,7 @@ spec:
     plural: prometheusrules
     shortNames:
     - promrule
+    - rule
     singular: prometheusrule
   scope: Namespaced
   versions:
