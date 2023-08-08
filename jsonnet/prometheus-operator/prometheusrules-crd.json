@@ -18,7 +18,8 @@
       "listKind": "PrometheusRuleList",
       "plural": "prometheusrules",
       "shortNames": [
-        "promrule"
+        "promrule",
+        "rule"
       ],
       "singular": "prometheusrule"
     },
