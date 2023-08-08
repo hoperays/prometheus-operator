@@ -18,7 +18,8 @@
       "listKind": "AlertmanagerConfigList",
       "plural": "alertmanagerconfigs",
       "shortNames": [
-        "amcfg"
+        "amcfg",
+        "subs"
       ],
       "singular": "alertmanagerconfig"
     },

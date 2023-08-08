@@ -15,6 +15,7 @@ spec:
     plural: alertmanagerconfigs
     shortNames:
     - amcfg
+    - subs
     singular: alertmanagerconfig
   scope: Namespaced
   versions:

@@ -16,6 +16,7 @@ spec:
     plural: prometheusrules
     shortNames:
     - promrule
+    - rule
     singular: prometheusrule
   scope: Namespaced
   versions:
