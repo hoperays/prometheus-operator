@@ -177,6 +177,9 @@ type Receiver struct {
 	SNSConfigs []SNSConfig `json:"snsConfigs,omitempty"`
 	// List of Telegram configurations.
 	TelegramConfigs []TelegramConfig `json:"telegramConfigs,omitempty"`
+
+	// List of DingTalk robot configurations.
+	DingTalkRobotConfigs []DingTalkRobotConfig `json:"dingtalkrobotConfigs,omitempty"`
 }
 
 // PagerDutyConfig configures notifications via PagerDuty.
@@ -840,6 +843,32 @@ type TelegramConfig struct {
 	// HTTP client configuration.
 	// +optional
 	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+}
+
+// DingTalkRobotConfig configures notifications via DingTalk robot.
+type DingTalkRobotConfig struct {
+	// Whether or not to notify about resolved alerts.
+	// +optional
+	SendResolved *bool `json:"sendResolved,omitempty"`
+	// HTTP client configuration.
+	// +optional
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	// The webhook URL of robot which the message will be sent.
+	WebhookURL string `json:"webhookURL"`
+	// Custom keywords for robot security authentication.
+	// +optional
+	Keywords []string `json:"keywords,omitempty"`
+	// Secret of additional signature for robot security authentication.
+	// +optional
+	Secret string `json:"secret,omitempty"`
+	// Template to generate the message content of the robot notification.
+	// +optional
+	Message string `json:"message,omitempty"`
+	// The maximum message length supported by the robot notification, unit: byte.
+	// And the excess part will be truncated.
+	// +optional
+	// +kubebuilder:validation:Minimum=1024
+	MaxMessageSize int `json:"maxMessageSize,omitempty"`
 }
 
 // InhibitRule defines an inhibition rule that allows to mute alerts when other
