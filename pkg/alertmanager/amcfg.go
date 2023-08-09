@@ -639,6 +639,18 @@ func (cb *configBuilder) convertReceiver(ctx context.Context, in *monitoringv1al
 		}
 	}
 
+	var dingTalkRobotConfigs []*dingTalkRobotConfig
+	if l := len(in.DingTalkRobotConfigs); l > 0 {
+		dingTalkRobotConfigs = make([]*dingTalkRobotConfig, l)
+		for i := range in.DingTalkRobotConfigs {
+			receiver, err := cb.convertDingTalkRobotConfig(ctx, in.DingTalkRobotConfigs[i], crKey)
+			if err != nil {
+				return nil, errors.Wrapf(err, "DingTalkRobotConfig[%d]", i)
+			}
+			dingTalkRobotConfigs[i] = receiver
+		}
+	}
+
 	var feishuBotConfigs []*feishuBotConfig
 	if l := len(in.FeishuBotConfigs); l > 0 {
 		feishuBotConfigs = make([]*feishuBotConfig, l)
@@ -665,7 +677,8 @@ func (cb *configBuilder) convertReceiver(ctx context.Context, in *monitoringv1al
 		SNSConfigs:       snsConfigs,
 		TelegramConfigs:  telegramConfigs,
 
-		FeishuBotConfigs: feishuBotConfigs,
+		DingTalkRobotConfigs: dingTalkRobotConfigs,
+		FeishuBotConfigs:     feishuBotConfigs,
 	}, nil
 }
 
@@ -1138,6 +1151,27 @@ func (cb *configBuilder) convertPushoverConfig(ctx context.Context, in monitorin
 
 func (cb *configBuilder) convertFeishuBotConfig(ctx context.Context, in monitoringv1alpha1.FeishuBotConfig, crKey types.NamespacedName) (*feishuBotConfig, error) {
 	out := &feishuBotConfig{
+		VSendResolved:  in.SendResolved,
+		WebhookURL:     in.WebhookURL,
+		Keywords:       in.Keywords,
+		Secret:         in.Secret,
+		Message:        in.Message,
+		MaxMessageSize: in.MaxMessageSize,
+	}
+
+	if in.HTTPConfig != nil {
+		httpConfig, err := cb.convertHTTPConfig(ctx, *in.HTTPConfig, crKey)
+		if err != nil {
+			return nil, err
+		}
+		out.HTTPConfig = httpConfig
+	}
+
+	return out, nil
+}
+
+func (cb *configBuilder) convertDingTalkRobotConfig(ctx context.Context, in monitoringv1alpha1.DingTalkRobotConfig, crKey types.NamespacedName) (*dingTalkRobotConfig, error) {
+	out := &dingTalkRobotConfig{
 		VSendResolved:  in.SendResolved,
 		WebhookURL:     in.WebhookURL,
 		Keywords:       in.Keywords,
