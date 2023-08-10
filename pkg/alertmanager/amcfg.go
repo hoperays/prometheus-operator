@@ -639,6 +639,18 @@ func (cb *configBuilder) convertReceiver(ctx context.Context, in *monitoringv1al
 		}
 	}
 
+	var feishuBotConfigs []*feishuBotConfig
+	if l := len(in.FeishuBotConfigs); l > 0 {
+		feishuBotConfigs = make([]*feishuBotConfig, l)
+		for i := range in.FeishuBotConfigs {
+			receiver, err := cb.convertFeishuBotConfig(ctx, in.FeishuBotConfigs[i], crKey)
+			if err != nil {
+				return nil, errors.Wrapf(err, "FeishuBotConfig[%d]", i)
+			}
+			feishuBotConfigs[i] = receiver
+		}
+	}
+
 	return &receiver{
 		Name:             makeNamespacedString(in.Name, crKey),
 		OpsgenieConfigs:  opsgenieConfigs,
@@ -652,6 +664,8 @@ func (cb *configBuilder) convertReceiver(ctx context.Context, in *monitoringv1al
 		PushoverConfigs:  pushoverConfigs,
 		SNSConfigs:       snsConfigs,
 		TelegramConfigs:  telegramConfigs,
+
+		FeishuBotConfigs: feishuBotConfigs,
 	}, nil
 }
 
@@ -1109,6 +1123,27 @@ func (cb *configBuilder) convertPushoverConfig(ctx context.Context, in monitorin
 			expire, _ := time.ParseDuration(in.Expire)
 			out.Expire = duration(expire)
 		}
+	}
+
+	if in.HTTPConfig != nil {
+		httpConfig, err := cb.convertHTTPConfig(ctx, *in.HTTPConfig, crKey)
+		if err != nil {
+			return nil, err
+		}
+		out.HTTPConfig = httpConfig
+	}
+
+	return out, nil
+}
+
+func (cb *configBuilder) convertFeishuBotConfig(ctx context.Context, in monitoringv1alpha1.FeishuBotConfig, crKey types.NamespacedName) (*feishuBotConfig, error) {
+	out := &feishuBotConfig{
+		VSendResolved:  in.SendResolved,
+		WebhookURL:     in.WebhookURL,
+		Keywords:       in.Keywords,
+		Secret:         in.Secret,
+		Message:        in.Message,
+		MaxMessageSize: in.MaxMessageSize,
 	}
 
 	if in.HTTPConfig != nil {

@@ -195,6 +195,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &monitoringv1alpha1.DiscordConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("EmailConfig"):
 		return &monitoringv1alpha1.EmailConfigApplyConfiguration{}
+	case v1alpha1.SchemeGroupVersion.WithKind("FeishuBotConfig"):
+		return &monitoringv1alpha1.FeishuBotConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("FileSDConfig"):
 		return &monitoringv1alpha1.FileSDConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("HTTPConfig"):
@@ -271,6 +273,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &monitoringv1beta1.DiscordConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("EmailConfig"):
 		return &monitoringv1beta1.EmailConfigApplyConfiguration{}
+	case v1beta1.SchemeGroupVersion.WithKind("FeishuBotConfig"):
+		return &monitoringv1beta1.FeishuBotConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("HTTPConfig"):
 		return &monitoringv1beta1.HTTPConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("InhibitRule"):
