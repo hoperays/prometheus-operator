@@ -19,18 +19,19 @@ package v1beta1
 // ReceiverApplyConfiguration represents an declarative configuration of the Receiver type for use
 // with apply.
 type ReceiverApplyConfiguration struct {
-	Name             *string                             `json:"name,omitempty"`
-	OpsGenieConfigs  []OpsGenieConfigApplyConfiguration  `json:"opsgenieConfigs,omitempty"`
-	PagerDutyConfigs []PagerDutyConfigApplyConfiguration `json:"pagerdutyConfigs,omitempty"`
-	DiscordConfigs   []DiscordConfigApplyConfiguration   `json:"discordConfigs,omitempty"`
-	SlackConfigs     []SlackConfigApplyConfiguration     `json:"slackConfigs,omitempty"`
-	WebhookConfigs   []WebhookConfigApplyConfiguration   `json:"webhookConfigs,omitempty"`
-	WeChatConfigs    []WeChatConfigApplyConfiguration    `json:"wechatConfigs,omitempty"`
-	EmailConfigs     []EmailConfigApplyConfiguration     `json:"emailConfigs,omitempty"`
-	VictorOpsConfigs []VictorOpsConfigApplyConfiguration `json:"victoropsConfigs,omitempty"`
-	PushoverConfigs  []PushoverConfigApplyConfiguration  `json:"pushoverConfigs,omitempty"`
-	SNSConfigs       []SNSConfigApplyConfiguration       `json:"snsConfigs,omitempty"`
-	TelegramConfigs  []TelegramConfigApplyConfiguration  `json:"telegramConfigs,omitempty"`
+	Name              *string                              `json:"name,omitempty"`
+	OpsGenieConfigs   []OpsGenieConfigApplyConfiguration   `json:"opsgenieConfigs,omitempty"`
+	PagerDutyConfigs  []PagerDutyConfigApplyConfiguration  `json:"pagerdutyConfigs,omitempty"`
+	DiscordConfigs    []DiscordConfigApplyConfiguration    `json:"discordConfigs,omitempty"`
+	SlackConfigs      []SlackConfigApplyConfiguration      `json:"slackConfigs,omitempty"`
+	WebhookConfigs    []WebhookConfigApplyConfiguration    `json:"webhookConfigs,omitempty"`
+	WeChatConfigs     []WeChatConfigApplyConfiguration     `json:"wechatConfigs,omitempty"`
+	EmailConfigs      []EmailConfigApplyConfiguration      `json:"emailConfigs,omitempty"`
+	VictorOpsConfigs  []VictorOpsConfigApplyConfiguration  `json:"victoropsConfigs,omitempty"`
+	PushoverConfigs   []PushoverConfigApplyConfiguration   `json:"pushoverConfigs,omitempty"`
+	SNSConfigs        []SNSConfigApplyConfiguration        `json:"snsConfigs,omitempty"`
+	TelegramConfigs   []TelegramConfigApplyConfiguration   `json:"telegramConfigs,omitempty"`
+	WeComRobotConfigs []WeComRobotConfigApplyConfiguration `json:"wecomrobotConfigs,omitempty"`
 }
 
 // ReceiverApplyConfiguration constructs an declarative configuration of the Receiver type for use with
@@ -186,6 +187,19 @@ func (b *ReceiverApplyConfiguration) WithTelegramConfigs(values ...*TelegramConf
 			panic("nil value passed to WithTelegramConfigs")
 		}
 		b.TelegramConfigs = append(b.TelegramConfigs, *values[i])
+	}
+	return b
+}
+
+// WithWeComRobotConfigs adds the given value to the WeComRobotConfigs field in the declarative configuration
+// and returns the receiver, so that objects can be build by chaining "With" function invocations.
+// If called multiple times, values provided by each call will be appended to the WeComRobotConfigs field.
+func (b *ReceiverApplyConfiguration) WithWeComRobotConfigs(values ...*WeComRobotConfigApplyConfiguration) *ReceiverApplyConfiguration {
+	for i := range values {
+		if values[i] == nil {
+			panic("nil value passed to WithWeComRobotConfigs")
+		}
+		b.WeComRobotConfigs = append(b.WeComRobotConfigs, *values[i])
 	}
 	return b
 }
