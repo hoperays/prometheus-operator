@@ -110,6 +110,7 @@ type receiver struct {
 	DiscordConfigs   []*discordConfig   `yaml:"discord_configs,omitempty"`
 	WebexConfigs     []*webexConfig     `yaml:"webex_configs,omitempty"`
 
+	WeComRobotConfigs    []*weComRobotConfig    `yaml:"wecomrobot_configs,omitempty"`
 	DingTalkRobotConfigs []*dingTalkRobotConfig `yaml:"dingtalkrobot_configs,omitempty"`
 	FeishuBotConfigs     []*feishuBotConfig     `yaml:"feishubot_configs,omitempty"`
 }
@@ -360,6 +361,14 @@ type webexConfig struct {
 	APIURL        string            `yaml:"api_url,omitempty"`
 	Message       string            `yaml:"message,omitempty"`
 	RoomID        string            `yaml:"room_id"`
+}
+
+type weComRobotConfig struct {
+	VSendResolved  *bool             `yaml:"send_resolved,omitempty"`
+	HTTPConfig     *httpClientConfig `yaml:"http_config,omitempty"`
+	WebhookURL     string            `yaml:"webhook_url,omitempty"`
+	Message        string            `yaml:"message,omitempty"`
+	MaxMessageSize int               `yaml:"max_message_size,omitempty"`
 }
 
 type dingTalkRobotConfig struct {

@@ -31,6 +31,7 @@ type ReceiverApplyConfiguration struct {
 	PushoverConfigs      []PushoverConfigApplyConfiguration      `json:"pushoverConfigs,omitempty"`
 	SNSConfigs           []SNSConfigApplyConfiguration           `json:"snsConfigs,omitempty"`
 	TelegramConfigs      []TelegramConfigApplyConfiguration      `json:"telegramConfigs,omitempty"`
+	WeComRobotConfigs    []WeComRobotConfigApplyConfiguration    `json:"wecomrobotConfigs,omitempty"`
 	DingTalkRobotConfigs []DingTalkRobotConfigApplyConfiguration `json:"dingtalkrobotConfigs,omitempty"`
 	FeishuBotConfigs     []FeishuBotConfigApplyConfiguration     `json:"feishubotConfigs,omitempty"`
 }
@@ -188,6 +189,19 @@ func (b *ReceiverApplyConfiguration) WithTelegramConfigs(values ...*TelegramConf
 			panic("nil value passed to WithTelegramConfigs")
 		}
 		b.TelegramConfigs = append(b.TelegramConfigs, *values[i])
+	}
+	return b
+}
+
+// WithWeComRobotConfigs adds the given value to the WeComRobotConfigs field in the declarative configuration
+// and returns the receiver, so that objects can be build by chaining "With" function invocations.
+// If called multiple times, values provided by each call will be appended to the WeComRobotConfigs field.
+func (b *ReceiverApplyConfiguration) WithWeComRobotConfigs(values ...*WeComRobotConfigApplyConfiguration) *ReceiverApplyConfiguration {
+	for i := range values {
+		if values[i] == nil {
+			panic("nil value passed to WithWeComRobotConfigs")
+		}
+		b.WeComRobotConfigs = append(b.WeComRobotConfigs, *values[i])
 	}
 	return b
 }

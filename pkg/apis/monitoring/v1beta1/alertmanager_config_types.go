@@ -176,6 +176,8 @@ type Receiver struct {
 	// List of Telegram configurations.
 	TelegramConfigs []TelegramConfig `json:"telegramConfigs,omitempty"`
 
+	// List of WeCom robot configurations.
+	WeComRobotConfigs []WeComRobotConfig `json:"wecomrobotConfigs,omitempty"`
 	// List of DingTalk robot configurations.
 	DingTalkRobotConfigs []DingTalkRobotConfig `json:"dingtalkrobotConfigs,omitempty"`
 	// List of Feishu bot configurations.
@@ -839,6 +841,26 @@ type TelegramConfig struct {
 	// HTTP client configuration.
 	// +optional
 	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+}
+
+// WeComRobotConfig configures notifications via WeCom robot.
+type WeComRobotConfig struct {
+	// Whether to notify about resolved alerts.
+	// +optional
+	SendResolved *bool `json:"sendResolved,omitempty"`
+	// HTTP client configuration.
+	// +optional
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	// The webhook URL of robot which the message will be sent.
+	WebhookURL string `json:"webhookUrl"`
+	// Template to generate the message content of the robot notification.
+	// +optional
+	Message string `json:"message,omitempty"`
+	// The maximum message length supported by the robot notification, unit: byte.
+	// And the excess part will be truncated.
+	// +optional
+	// +kubebuilder:validation:Minimum=1024
+	MaxMessageSize int `json:"maxMessageSize,omitempty"`
 }
 
 // DingTalkRobotConfig configures notifications via DingTalk robot.
