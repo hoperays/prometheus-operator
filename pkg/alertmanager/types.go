@@ -109,6 +109,8 @@ type receiver struct {
 	TelegramConfigs  []*telegramConfig  `yaml:"telegram_configs,omitempty" json:"telegram_configs,omitempty"`
 	DiscordConfigs   []*discordConfig   `yaml:"discord_configs,omitempty"`
 	WebexConfigs     []*webexConfig     `yaml:"webex_configs,omitempty"`
+
+	WeComRobotConfigs []*weComRobotConfig `yaml:"wecomrobot_configs,omitempty"`
 }
 
 type webhookConfig struct {
@@ -341,6 +343,14 @@ type telegramConfig struct {
 	DisableNotifications bool              `yaml:"disable_notifications,omitempty" json:"disable_notifications,omitempty"`
 	ParseMode            string            `yaml:"parse_mode,omitempty" json:"parse_mode,omitempty"`
 	HTTPConfig           *httpClientConfig `yaml:"http_config,omitempty" json:"http_config,omitempty"`
+}
+
+type weComRobotConfig struct {
+	VSendResolved  *bool             `yaml:"send_resolved,omitempty"`
+	HTTPConfig     *httpClientConfig `yaml:"http_config,omitempty"`
+	Message        string            `yaml:"message,omitempty"`
+	WebhookURL     string            `yaml:"webhook_url,omitempty"`
+	MaxMessageSize int               `yaml:"max_message_size,omitempty"`
 }
 
 type discordConfig struct {

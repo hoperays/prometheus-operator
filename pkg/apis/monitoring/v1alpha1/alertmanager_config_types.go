@@ -177,6 +177,9 @@ type Receiver struct {
 	SNSConfigs []SNSConfig `json:"snsConfigs,omitempty"`
 	// List of Telegram configurations.
 	TelegramConfigs []TelegramConfig `json:"telegramConfigs,omitempty"`
+
+	// List of WeCom Robot configurations.
+	WeComRobotConfigs []WeComRobotConfig `json:"wecomrobotConfigs,omitempty"`
 }
 
 // PagerDutyConfig configures notifications via PagerDuty.
@@ -840,6 +843,26 @@ type TelegramConfig struct {
 	// HTTP client configuration.
 	// +optional
 	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+}
+
+// WeComRobotConfig configures notifications via WeCom Robot.
+type WeComRobotConfig struct {
+	// Whether to notify about resolved alerts.
+	// +optional
+	SendResolved *bool `json:"sendResolved,omitempty"`
+	// HTTP client configuration.
+	// +optional
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	// Template to generate the message content of the robot notification.
+	// +optional
+	Message string `json:"message,omitempty"`
+	// The webhook URL of robot which the message will send to.
+	WebhookURL string `json:"webhookUrl"`
+	// The maximum message length supported by the robot notification, unit: byte.
+	// And the excess part will be truncated.
+	// +optional
+	// +kubebuilder:validation:Minimum=1024
+	MaxMessageSize int `json:"maxMessageSize,omitempty"`
 }
 
 // InhibitRule defines an inhibition rule that allows to mute alerts when other
