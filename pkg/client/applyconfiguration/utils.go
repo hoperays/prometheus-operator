@@ -191,10 +191,14 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &monitoringv1alpha1.ConsulSDConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("DayOfMonthRange"):
 		return &monitoringv1alpha1.DayOfMonthRangeApplyConfiguration{}
+	case v1alpha1.SchemeGroupVersion.WithKind("DingTalkRobotConfig"):
+		return &monitoringv1alpha1.DingTalkRobotConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("DiscordConfig"):
 		return &monitoringv1alpha1.DiscordConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("EmailConfig"):
 		return &monitoringv1alpha1.EmailConfigApplyConfiguration{}
+	case v1alpha1.SchemeGroupVersion.WithKind("FeishuBotConfig"):
+		return &monitoringv1alpha1.FeishuBotConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("FileSDConfig"):
 		return &monitoringv1alpha1.FileSDConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("HTTPConfig"):
@@ -259,6 +263,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &monitoringv1alpha1.WebhookConfigApplyConfiguration{}
 	case v1alpha1.SchemeGroupVersion.WithKind("WeChatConfig"):
 		return &monitoringv1alpha1.WeChatConfigApplyConfiguration{}
+	case v1alpha1.SchemeGroupVersion.WithKind("WeComRobotConfig"):
+		return &monitoringv1alpha1.WeComRobotConfigApplyConfiguration{}
 
 		// Group=monitoring.coreos.com, Version=v1beta1
 	case v1beta1.SchemeGroupVersion.WithKind("AlertmanagerConfig"):
@@ -267,10 +273,14 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &monitoringv1beta1.AlertmanagerConfigSpecApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("DayOfMonthRange"):
 		return &monitoringv1beta1.DayOfMonthRangeApplyConfiguration{}
+	case v1beta1.SchemeGroupVersion.WithKind("DingTalkRobotConfig"):
+		return &monitoringv1beta1.DingTalkRobotConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("DiscordConfig"):
 		return &monitoringv1beta1.DiscordConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("EmailConfig"):
 		return &monitoringv1beta1.EmailConfigApplyConfiguration{}
+	case v1beta1.SchemeGroupVersion.WithKind("FeishuBotConfig"):
+		return &monitoringv1beta1.FeishuBotConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("HTTPConfig"):
 		return &monitoringv1beta1.HTTPConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("InhibitRule"):
@@ -321,6 +331,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &monitoringv1beta1.WebhookConfigApplyConfiguration{}
 	case v1beta1.SchemeGroupVersion.WithKind("WeChatConfig"):
 		return &monitoringv1beta1.WeChatConfigApplyConfiguration{}
+	case v1beta1.SchemeGroupVersion.WithKind("WeComRobotConfig"):
+		return &monitoringv1beta1.WeComRobotConfigApplyConfiguration{}
 
 	}
 	return nil

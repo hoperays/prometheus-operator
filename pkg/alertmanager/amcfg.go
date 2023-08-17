@@ -639,6 +639,42 @@ func (cb *configBuilder) convertReceiver(ctx context.Context, in *monitoringv1al
 		}
 	}
 
+	var weComRobotConfigs []*weComRobotConfig
+	if l := len(in.WeComRobotConfigs); l > 0 {
+		weComRobotConfigs = make([]*weComRobotConfig, l)
+		for i := range in.WeComRobotConfigs {
+			receiver, err := cb.convertWeComRobotConfig(ctx, in.WeComRobotConfigs[i], crKey)
+			if err != nil {
+				return nil, errors.Wrapf(err, "WeComRobotConfig[%d]", i)
+			}
+			weComRobotConfigs[i] = receiver
+		}
+	}
+
+	var dingTalkRobotConfigs []*dingTalkRobotConfig
+	if l := len(in.DingTalkRobotConfigs); l > 0 {
+		dingTalkRobotConfigs = make([]*dingTalkRobotConfig, l)
+		for i := range in.DingTalkRobotConfigs {
+			receiver, err := cb.convertDingTalkRobotConfig(ctx, in.DingTalkRobotConfigs[i], crKey)
+			if err != nil {
+				return nil, errors.Wrapf(err, "DingTalkRobotConfig[%d]", i)
+			}
+			dingTalkRobotConfigs[i] = receiver
+		}
+	}
+
+	var feishuBotConfigs []*feishuBotConfig
+	if l := len(in.FeishuBotConfigs); l > 0 {
+		feishuBotConfigs = make([]*feishuBotConfig, l)
+		for i := range in.FeishuBotConfigs {
+			receiver, err := cb.convertFeishuBotConfig(ctx, in.FeishuBotConfigs[i], crKey)
+			if err != nil {
+				return nil, errors.Wrapf(err, "FeishuBotConfig[%d]", i)
+			}
+			feishuBotConfigs[i] = receiver
+		}
+	}
+
 	return &receiver{
 		Name:             makeNamespacedString(in.Name, crKey),
 		OpsgenieConfigs:  opsgenieConfigs,
@@ -652,6 +688,10 @@ func (cb *configBuilder) convertReceiver(ctx context.Context, in *monitoringv1al
 		PushoverConfigs:  pushoverConfigs,
 		SNSConfigs:       snsConfigs,
 		TelegramConfigs:  telegramConfigs,
+
+		WeComRobotConfigs:    weComRobotConfigs,
+		DingTalkRobotConfigs: dingTalkRobotConfigs,
+		FeishuBotConfigs:     feishuBotConfigs,
 	}, nil
 }
 
@@ -1109,6 +1149,67 @@ func (cb *configBuilder) convertPushoverConfig(ctx context.Context, in monitorin
 			expire, _ := time.ParseDuration(in.Expire)
 			out.Expire = duration(expire)
 		}
+	}
+
+	if in.HTTPConfig != nil {
+		httpConfig, err := cb.convertHTTPConfig(ctx, *in.HTTPConfig, crKey)
+		if err != nil {
+			return nil, err
+		}
+		out.HTTPConfig = httpConfig
+	}
+
+	return out, nil
+}
+
+func (cb *configBuilder) convertFeishuBotConfig(ctx context.Context, in monitoringv1alpha1.FeishuBotConfig, crKey types.NamespacedName) (*feishuBotConfig, error) {
+	out := &feishuBotConfig{
+		VSendResolved:  in.SendResolved,
+		WebhookURL:     in.WebhookURL,
+		Keywords:       in.Keywords,
+		Secret:         in.Secret,
+		Message:        in.Message,
+		MaxMessageSize: in.MaxMessageSize,
+	}
+
+	if in.HTTPConfig != nil {
+		httpConfig, err := cb.convertHTTPConfig(ctx, *in.HTTPConfig, crKey)
+		if err != nil {
+			return nil, err
+		}
+		out.HTTPConfig = httpConfig
+	}
+
+	return out, nil
+}
+
+func (cb *configBuilder) convertDingTalkRobotConfig(ctx context.Context, in monitoringv1alpha1.DingTalkRobotConfig, crKey types.NamespacedName) (*dingTalkRobotConfig, error) {
+	out := &dingTalkRobotConfig{
+		VSendResolved:  in.SendResolved,
+		WebhookURL:     in.WebhookURL,
+		Keywords:       in.Keywords,
+		Secret:         in.Secret,
+		Message:        in.Message,
+		MaxMessageSize: in.MaxMessageSize,
+	}
+
+	if in.HTTPConfig != nil {
+		httpConfig, err := cb.convertHTTPConfig(ctx, *in.HTTPConfig, crKey)
+		if err != nil {
+			return nil, err
+		}
+		out.HTTPConfig = httpConfig
+	}
+
+	return out, nil
+}
+
+func (cb *configBuilder) convertWeComRobotConfig(ctx context.Context, in monitoringv1alpha1.WeComRobotConfig, crKey types.NamespacedName) (*weComRobotConfig, error) {
+	out := &weComRobotConfig{
+		VSendResolved:  in.SendResolved,
+		WebhookURL:     in.WebhookURL,
+		Message:        in.Message,
+		MaxMessageSize: in.MaxMessageSize,
 	}
 
 	if in.HTTPConfig != nil {
