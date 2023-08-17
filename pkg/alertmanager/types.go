@@ -111,6 +111,10 @@ type receiver struct {
 	DiscordConfigs   []*discordConfig   `yaml:"discord_configs,omitempty"`
 	WebexConfigs     []*webexConfig     `yaml:"webex_configs,omitempty"`
 	MSTeamsConfigs   []*msTeamsConfig   `yaml:"msteams_configs,omitempty"`
+
+	WeComRobotConfigs    []*weComRobotConfig    `yaml:"wecomrobot_configs,omitempty"`
+	DingTalkRobotConfigs []*dingTalkRobotConfig `yaml:"dingtalkrobot_configs,omitempty"`
+	FeishuBotConfigs     []*feishuBotConfig     `yaml:"feishubot_configs,omitempty"`
 }
 
 type webhookConfig struct {
@@ -421,3 +425,31 @@ type msTeamsConfig struct {
 }
 
 type timeInterval config.TimeInterval
+
+type weComRobotConfig struct {
+	VSendResolved  *bool             `yaml:"send_resolved,omitempty"`
+	HTTPConfig     *httpClientConfig `yaml:"http_config,omitempty"`
+	WebhookURL     string            `yaml:"webhook_url"`
+	Message        string            `yaml:"message,omitempty"`
+	MaxMessageSize int               `yaml:"max_message_size,omitempty"`
+}
+
+type dingTalkRobotConfig struct {
+	VSendResolved  *bool             `yaml:"send_resolved,omitempty"`
+	HTTPConfig     *httpClientConfig `yaml:"http_config,omitempty"`
+	WebhookURL     string            `yaml:"webhook_url"`
+	Keywords       []string          `yaml:"keywords,omitempty"`
+	Secret         string            `yaml:"secret,omitempty"`
+	Message        string            `yaml:"message,omitempty"`
+	MaxMessageSize int               `yaml:"max_message_size,omitempty"`
+}
+
+type feishuBotConfig struct {
+	VSendResolved  *bool             `yaml:"send_resolved,omitempty"`
+	HTTPConfig     *httpClientConfig `yaml:"http_config,omitempty"`
+	WebhookURL     string            `yaml:"webhook_url"`
+	Keywords       []string          `yaml:"keywords,omitempty"`
+	Secret         string            `yaml:"secret,omitempty"`
+	Message        string            `yaml:"message,omitempty"`
+	MaxMessageSize int               `yaml:"max_message_size,omitempty"`
+}

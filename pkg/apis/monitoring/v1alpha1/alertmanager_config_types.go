@@ -190,6 +190,13 @@ type Receiver struct {
 	// List of MSTeams configurations.
 	// It requires Alertmanager >= 0.26.0.
 	MSTeamsConfigs []MSTeamsConfig `json:"msteamsConfigs,omitempty"`
+
+	// List of WeCom robot configurations.
+	WeComRobotConfigs []WeComRobotConfig `json:"wecomrobotConfigs,omitempty"`
+	// List of DingTalk robot configurations.
+	DingTalkRobotConfigs []DingTalkRobotConfig `json:"dingtalkrobotConfigs,omitempty"`
+	// List of Feishu bot configurations.
+	FeishuBotConfigs []FeishuBotConfig `json:"feishubotConfigs,omitempty"`
 }
 
 // PagerDutyConfig configures notifications via PagerDuty.
@@ -958,6 +965,78 @@ type MSTeamsConfig struct {
 	// HTTP client configuration.
 	// +optional
 	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+}
+
+// WeComRobotConfig configures notifications via WeCom robot.
+type WeComRobotConfig struct {
+	// Whether to notify about resolved alerts.
+	// +optional
+	SendResolved *bool `json:"sendResolved,omitempty"`
+	// HTTP client configuration.
+	// +optional
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	// The webhook URL of robot which the message will be sent.
+	WebhookURL string `json:"webhookURL"`
+	// Template to generate the message content of the robot notification.
+	// +optional
+	Message string `json:"message,omitempty"`
+	// The maximum message length supported by the robot notification, unit: byte.
+	// And the excess part will be truncated.
+	// +optional
+	// +kubebuilder:validation:Minimum=1024
+	MaxMessageSize int `json:"maxMessageSize,omitempty"`
+}
+
+// DingTalkRobotConfig configures notifications via DingTalk robot.
+type DingTalkRobotConfig struct {
+	// Whether or not to notify about resolved alerts.
+	// +optional
+	SendResolved *bool `json:"sendResolved,omitempty"`
+	// HTTP client configuration.
+	// +optional
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	// The webhook URL of robot which the message will be sent.
+	WebhookURL string `json:"webhookURL"`
+	// Custom keywords for robot security authentication.
+	// +optional
+	Keywords []string `json:"keywords,omitempty"`
+	// Secret of additional signature for robot security authentication.
+	// +optional
+	Secret string `json:"secret,omitempty"`
+	// Template to generate the message content of the robot notification.
+	// +optional
+	Message string `json:"message,omitempty"`
+	// The maximum message length supported by the robot notification, unit: byte.
+	// And the excess part will be truncated.
+	// +optional
+	// +kubebuilder:validation:Minimum=1024
+	MaxMessageSize int `json:"maxMessageSize,omitempty"`
+}
+
+// FeishuBotConfig configures notifications via Feishu bot.
+type FeishuBotConfig struct {
+	// Whether or not to notify about resolved alerts.
+	// +optional
+	SendResolved *bool `json:"sendResolved,omitempty"`
+	// HTTP client configuration.
+	// +optional
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	// The webhook URL of robot which the message will be sent.
+	WebhookURL string `json:"webhookURL"`
+	// Custom keywords for robot security authentication.
+	// +optional
+	Keywords []string `json:"keywords,omitempty"`
+	// Secret of additional signature for robot security authentication.
+	// +optional
+	Secret string `json:"secret,omitempty"`
+	// Template to generate the message content of the robot notification.
+	// +optional
+	Message string `json:"message,omitempty"`
+	// The maximum message length supported by the robot notification, unit: byte.
+	// And the excess part will be truncated.
+	// +optional
+	// +kubebuilder:validation:Minimum=1024
+	MaxMessageSize int `json:"maxMessageSize,omitempty"`
 }
 
 // InhibitRule defines an inhibition rule that allows to mute alerts when other

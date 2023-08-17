@@ -19,20 +19,23 @@ package v1beta1
 // ReceiverApplyConfiguration represents a declarative configuration of the Receiver type for use
 // with apply.
 type ReceiverApplyConfiguration struct {
-	Name             *string                             `json:"name,omitempty"`
-	OpsGenieConfigs  []OpsGenieConfigApplyConfiguration  `json:"opsgenieConfigs,omitempty"`
-	PagerDutyConfigs []PagerDutyConfigApplyConfiguration `json:"pagerdutyConfigs,omitempty"`
-	DiscordConfigs   []DiscordConfigApplyConfiguration   `json:"discordConfigs,omitempty"`
-	SlackConfigs     []SlackConfigApplyConfiguration     `json:"slackConfigs,omitempty"`
-	WebhookConfigs   []WebhookConfigApplyConfiguration   `json:"webhookConfigs,omitempty"`
-	WeChatConfigs    []WeChatConfigApplyConfiguration    `json:"wechatConfigs,omitempty"`
-	EmailConfigs     []EmailConfigApplyConfiguration     `json:"emailConfigs,omitempty"`
-	VictorOpsConfigs []VictorOpsConfigApplyConfiguration `json:"victoropsConfigs,omitempty"`
-	PushoverConfigs  []PushoverConfigApplyConfiguration  `json:"pushoverConfigs,omitempty"`
-	SNSConfigs       []SNSConfigApplyConfiguration       `json:"snsConfigs,omitempty"`
-	TelegramConfigs  []TelegramConfigApplyConfiguration  `json:"telegramConfigs,omitempty"`
-	WebexConfigs     []WebexConfigApplyConfiguration     `json:"webexConfigs,omitempty"`
-	MSTeamsConfigs   []MSTeamsConfigApplyConfiguration   `json:"msteamsConfigs,omitempty"`
+	Name                 *string                                 `json:"name,omitempty"`
+	OpsGenieConfigs      []OpsGenieConfigApplyConfiguration      `json:"opsgenieConfigs,omitempty"`
+	PagerDutyConfigs     []PagerDutyConfigApplyConfiguration     `json:"pagerdutyConfigs,omitempty"`
+	DiscordConfigs       []DiscordConfigApplyConfiguration       `json:"discordConfigs,omitempty"`
+	SlackConfigs         []SlackConfigApplyConfiguration         `json:"slackConfigs,omitempty"`
+	WebhookConfigs       []WebhookConfigApplyConfiguration       `json:"webhookConfigs,omitempty"`
+	WeChatConfigs        []WeChatConfigApplyConfiguration        `json:"wechatConfigs,omitempty"`
+	EmailConfigs         []EmailConfigApplyConfiguration         `json:"emailConfigs,omitempty"`
+	VictorOpsConfigs     []VictorOpsConfigApplyConfiguration     `json:"victoropsConfigs,omitempty"`
+	PushoverConfigs      []PushoverConfigApplyConfiguration      `json:"pushoverConfigs,omitempty"`
+	SNSConfigs           []SNSConfigApplyConfiguration           `json:"snsConfigs,omitempty"`
+	TelegramConfigs      []TelegramConfigApplyConfiguration      `json:"telegramConfigs,omitempty"`
+	WebexConfigs         []WebexConfigApplyConfiguration         `json:"webexConfigs,omitempty"`
+	MSTeamsConfigs       []MSTeamsConfigApplyConfiguration       `json:"msteamsConfigs,omitempty"`
+	WeComRobotConfigs    []WeComRobotConfigApplyConfiguration    `json:"wecomrobotConfigs,omitempty"`
+	DingTalkRobotConfigs []DingTalkRobotConfigApplyConfiguration `json:"dingtalkrobotConfigs,omitempty"`
+	FeishuBotConfigs     []FeishuBotConfigApplyConfiguration     `json:"feishubotConfigs,omitempty"`
 }
 
 // ReceiverApplyConfiguration constructs a declarative configuration of the Receiver type for use with
@@ -214,6 +217,45 @@ func (b *ReceiverApplyConfiguration) WithMSTeamsConfigs(values ...*MSTeamsConfig
 			panic("nil value passed to WithMSTeamsConfigs")
 		}
 		b.MSTeamsConfigs = append(b.MSTeamsConfigs, *values[i])
+	}
+	return b
+}
+
+// WithWeComRobotConfigs adds the given value to the WeComRobotConfigs field in the declarative configuration
+// and returns the receiver, so that objects can be build by chaining "With" function invocations.
+// If called multiple times, values provided by each call will be appended to the WeComRobotConfigs field.
+func (b *ReceiverApplyConfiguration) WithWeComRobotConfigs(values ...*WeComRobotConfigApplyConfiguration) *ReceiverApplyConfiguration {
+	for i := range values {
+		if values[i] == nil {
+			panic("nil value passed to WithWeComRobotConfigs")
+		}
+		b.WeComRobotConfigs = append(b.WeComRobotConfigs, *values[i])
+	}
+	return b
+}
+
+// WithDingTalkRobotConfigs adds the given value to the DingTalkRobotConfigs field in the declarative configuration
+// and returns the receiver, so that objects can be build by chaining "With" function invocations.
+// If called multiple times, values provided by each call will be appended to the DingTalkRobotConfigs field.
+func (b *ReceiverApplyConfiguration) WithDingTalkRobotConfigs(values ...*DingTalkRobotConfigApplyConfiguration) *ReceiverApplyConfiguration {
+	for i := range values {
+		if values[i] == nil {
+			panic("nil value passed to WithDingTalkRobotConfigs")
+		}
+		b.DingTalkRobotConfigs = append(b.DingTalkRobotConfigs, *values[i])
+	}
+	return b
+}
+
+// WithFeishuBotConfigs adds the given value to the FeishuBotConfigs field in the declarative configuration
+// and returns the receiver, so that objects can be build by chaining "With" function invocations.
+// If called multiple times, values provided by each call will be appended to the FeishuBotConfigs field.
+func (b *ReceiverApplyConfiguration) WithFeishuBotConfigs(values ...*FeishuBotConfigApplyConfiguration) *ReceiverApplyConfiguration {
+	for i := range values {
+		if values[i] == nil {
+			panic("nil value passed to WithFeishuBotConfigs")
+		}
+		b.FeishuBotConfigs = append(b.FeishuBotConfigs, *values[i])
 	}
 	return b
 }
