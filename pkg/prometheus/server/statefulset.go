@@ -487,6 +487,12 @@ func makeStatefulSetSpec(
 		return nil, errors.Wrap(err, "failed to merge containers spec")
 	}
 
+	finalAffinity := cpf.Affinity.DeepCopy()
+	// Stuff PodAffinity or PodAntiAffinity with the values of finalLabels.
+	if cpf.Affinity != nil {
+		stuffAffinity(finalAffinity, finalLabels)
+	}
+
 	// PodManagementPolicy is set to Parallel to mitigate issues in kubernetes: https://github.com/kubernetes/kubernetes/issues/60164
 	// This is also mentioned as one of limitations of StatefulSets: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations
 	return &appsv1.StatefulSetSpec{
@@ -516,7 +522,7 @@ func makeStatefulSetSpec(
 				TerminationGracePeriodSeconds: &terminationGracePeriod,
 				Volumes:                       volumes,
 				Tolerations:                   cpf.Tolerations,
-				Affinity:                      cpf.Affinity,
+				Affinity:                      finalAffinity,
 				TopologySpreadConstraints:     cpf.TopologySpreadConstraints,
 				HostAliases:                   operator.MakeHostAliases(cpf.HostAliases),
 				HostNetwork:                   cpf.HostNetwork,
@@ -832,4 +838,48 @@ func queryLogFileVolume(queryLogFile string) (v1.Volume, bool) {
 			EmptyDir: &v1.EmptyDirVolumeSource{},
 		},
 	}, true
+}
+
+// If the key in MatchLabels of PodAffinity/PodAntiAffinity exists in PodTemplateSpecLabels with value "", it will be stuffed with the value of PodTemplateSpecLabels.
+func stuffAffinity(affinity *v1.Affinity, ptsLabels map[string]string) {
+	stuffFunc := func(pati interface{}) {
+		switch pats := pati.(type) {
+		case *[]v1.PodAffinityTerm:
+			for _, pat := range *pats {
+				for key, value := range pat.LabelSelector.MatchLabels {
+					if newValue, ok := ptsLabels[key]; ok && value == "" {
+						pat.LabelSelector.MatchLabels[key] = newValue
+					}
+				}
+			}
+		case *[]v1.WeightedPodAffinityTerm:
+			for _, wpat := range *pats {
+				for key, value := range wpat.PodAffinityTerm.LabelSelector.MatchLabels {
+					if newValue, ok := ptsLabels[key]; ok && value == "" {
+						wpat.PodAffinityTerm.LabelSelector.MatchLabels[key] = newValue
+					}
+				}
+			}
+		}
+	}
+
+	if affinity.PodAffinity != nil {
+		if len(affinity.PodAffinity.RequiredDuringSchedulingIgnoredDuringExecution) > 0 {
+			stuffFunc(&affinity.PodAffinity.RequiredDuringSchedulingIgnoredDuringExecution)
+		}
+
+		if len(affinity.PodAffinity.PreferredDuringSchedulingIgnoredDuringExecution) > 0 {
+			stuffFunc(&affinity.PodAffinity.PreferredDuringSchedulingIgnoredDuringExecution)
+		}
+	}
+
+	if affinity.PodAntiAffinity != nil {
+		if len(affinity.PodAntiAffinity.RequiredDuringSchedulingIgnoredDuringExecution) > 0 {
+			stuffFunc(&affinity.PodAntiAffinity.RequiredDuringSchedulingIgnoredDuringExecution)
+		}
+
+		if len(affinity.PodAntiAffinity.PreferredDuringSchedulingIgnoredDuringExecution) > 0 {
+			stuffFunc(&affinity.PodAntiAffinity.PreferredDuringSchedulingIgnoredDuringExecution)
+		}
+	}
 }
