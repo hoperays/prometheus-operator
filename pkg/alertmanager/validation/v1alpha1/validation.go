@@ -106,6 +106,18 @@ func validateReceivers(receivers []monitoringv1alpha1.Receiver) (map[string]stru
 		if err := validateMSTeamsConfigs(receiver.MSTeamsConfigs); err != nil {
 			return nil, fmt.Errorf("failed to validate 'msteamsConfig' - receiver %s: %w", receiver.Name, err)
 		}
+
+		if err := validateWeComRobotConfigs(receiver.WeComRobotConfigs); err != nil {
+			return nil, fmt.Errorf("failed to validate 'weComRobotConfig' - receiver %s: %w", receiver.Name, err)
+		}
+
+		if err := validateDingTalkRobotConfigs(receiver.DingTalkRobotConfigs); err != nil {
+			return nil, fmt.Errorf("failed to validate 'dingTalkRobotConfig' - receiver %s: %w", receiver.Name, err)
+		}
+
+		if err := validateFeishuBotConfigs(receiver.FeishuBotConfigs); err != nil {
+			return nil, fmt.Errorf("failed to validate 'feishuBotConfig' - receiver %s: %w", receiver.Name, err)
+		}
 	}
 
 	return receiverNames, nil
@@ -337,6 +349,60 @@ func validateWebexConfigs(configs []monitoringv1alpha1.WebexConfig) error {
 
 func validateMSTeamsConfigs(configs []monitoringv1alpha1.MSTeamsConfig) error {
 	for _, config := range configs {
+		if err := config.HTTPConfig.Validate(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func validateWeComRobotConfigs(configs []monitoringv1alpha1.WeComRobotConfig) error {
+	for _, config := range configs {
+		if config.WebhookURL == "" {
+			return fmt.Errorf("'weComRobot webhookURL' must be specified")
+		}
+
+		if _, err := validation.ValidateURL(config.WebhookURL); err != nil {
+			return fmt.Errorf("invalid 'weComRobot webhookURL': %w", err)
+		}
+
+		if err := config.HTTPConfig.Validate(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func validateDingTalkRobotConfigs(configs []monitoringv1alpha1.DingTalkRobotConfig) error {
+	for _, config := range configs {
+		if config.WebhookURL == "" {
+			return fmt.Errorf("'dingTalkRobot webhookURL' must be specified")
+		}
+
+		if _, err := validation.ValidateURL(config.WebhookURL); err != nil {
+			return fmt.Errorf("invalid 'dingTalkRobot webhookURL': %w", err)
+		}
+
+		if err := config.HTTPConfig.Validate(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func validateFeishuBotConfigs(configs []monitoringv1alpha1.FeishuBotConfig) error {
+	for _, config := range configs {
+		if config.WebhookURL == "" {
+			return fmt.Errorf("'feishuBot webhookURL' must be specified")
+		}
+
+		if _, err := validation.ValidateURL(config.WebhookURL); err != nil {
+			return fmt.Errorf("invalid 'feishuBot webhookURL': %w", err)
+		}
+
 		if err := config.HTTPConfig.Validate(); err != nil {
 			return err
 		}
