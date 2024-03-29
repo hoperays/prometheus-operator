@@ -95,6 +95,18 @@ func validateReceivers(receivers []monitoringv1beta1.Receiver) (map[string]struc
 		if err := validateDiscordConfigs(receiver.DiscordConfigs); err != nil {
 			return nil, errors.Wrapf(err, "failed to validate 'discordConfig' - receiver %s", receiver.Name)
 		}
+
+		if err := validateWeComRobotConfigs(receiver.WeComRobotConfigs); err != nil {
+			return nil, errors.Wrapf(err, "failed to validate 'weComRobotConfig' - receiver %s", receiver.Name)
+		}
+
+		if err := validateDingTalkRobotConfigs(receiver.DingTalkRobotConfigs); err != nil {
+			return nil, errors.Wrapf(err, "failed to validate 'dingTalkRobotConfig' - receiver %s", receiver.Name)
+		}
+
+		if err := validateFeishuBotConfigs(receiver.FeishuBotConfigs); err != nil {
+			return nil, errors.Wrapf(err, "failed to validate 'feishuBotConfig' - receiver %s", receiver.Name)
+		}
 	}
 
 	return receiverNames, nil
@@ -286,6 +298,60 @@ func validateDiscordConfigs(configs []monitoringv1beta1.DiscordConfig) error {
 			return err
 		}
 	}
+	return nil
+}
+
+func validateWeComRobotConfigs(configs []monitoringv1beta1.WeComRobotConfig) error {
+	for _, config := range configs {
+		if config.WebhookURL == "" {
+			return errors.New("'weComRobot webhookURL' must be specified")
+		}
+
+		if _, err := validation.ValidateURL(config.WebhookURL); err != nil {
+			return errors.Wrapf(err, "invalid 'weComRobot webhookURL'")
+		}
+
+		if err := config.HTTPConfig.Validate(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func validateDingTalkRobotConfigs(configs []monitoringv1beta1.DingTalkRobotConfig) error {
+	for _, config := range configs {
+		if config.WebhookURL == "" {
+			return errors.New("'dingTalkRobot webhookURL' must be specified")
+		}
+
+		if _, err := validation.ValidateURL(config.WebhookURL); err != nil {
+			return errors.Wrapf(err, "invalid 'dingTalkRobot webhookURL'")
+		}
+
+		if err := config.HTTPConfig.Validate(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func validateFeishuBotConfigs(configs []monitoringv1beta1.FeishuBotConfig) error {
+	for _, config := range configs {
+		if config.WebhookURL == "" {
+			return errors.New("'feishuBot webhookURL' must be specified")
+		}
+
+		if _, err := validation.ValidateURL(config.WebhookURL); err != nil {
+			return errors.Wrapf(err, "invalid 'feishuBot webhookURL'")
+		}
+
+		if err := config.HTTPConfig.Validate(); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
